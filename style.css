@@ -1,58 +1,9 @@
-#barreRecherche {
-    margin-left: 15%;
-    padding: 15px;
-    border-radius: 10px;
-    width: 50%;
+.itemA:hover{
+    background-color: var(--bs-success-text);
 }
-
-.recette {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    margin-top: 100px;
-    margin-bottom: 100px;
+.itemI:hover{
+    background-color: var(--bs-primary-text);
 }
-
-.recette article div h2 {
-    margin-bottom: 5px;
-}
-
-/*.recette article:hover {
-    background-color: #f8f8f8;
-    transform: scale(1.05);
-}*/
-.recette article {
-    border-radius: 5%;
-    background-color: #e7e7e7;
-    margin: 50px;
-    margin-top: 0;
-    height: 350px;
-}
-
-p {
-    margin-top: 2px;
-    margin-bottom: 2px;
-}
-
-.titreTemps{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    height: auto !important;
-}
-.quantiteDescription{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-.ingredientQuantite{
-    width: auto !important;
-}
-
-.description{
-    text-overflow: ellipsis;
-}
-.quantite{
-    height: auto !important;
-    min-width: fit-content;
+.itemU:hover{
+    background-color: var(--bs-danger-text);
 }
