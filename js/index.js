@@ -97,173 +97,19 @@ async function init() {
 
 init();
 
-function removeDuplicates(array) {
-
-    // Declare a new array
-    let newArray = [];
-
-    // Declare an empty object
-    let uniqueObject = {};
-
-    // Loop for the array elements
-    for (let i in array) {
-
-        obj = array[i];
-
-        uniqueObject[obj] = array[i];
-    }
-
-    // Loop to push unique object into array
-    for (i in uniqueObject) {
-        newArray.push(uniqueObject[i]);
-    }
-
-    return newArray;
-}
-
 let recettes = recipes;
-
-let Ingredients = removeDuplicates(IngredientsAll());
-
-/**
- * recupere tout les ingredient de recipes
- * @returns { array } ingredients
- */
-function IngredientsAll() {
-    let result = [];
-    let i = 0;
-    recettes.forEach(function (recette) {
-        if (result.length > 0) {
-            recette['ingredients'].forEach(function (element) {
-                if (!isInputInArray(result,  element['ingredient'].toLowerCase())) {
-                    result[i] = element['ingredient'];
-                    i++;
-                }else{
-                    return;
-                }
-            });
-        } else {
-            recette['ingredients'].forEach(function (element) {
-                result[i] = element['ingredient'];
-                i++;
-            })
-        }
-    })
-    return result;
-};
-
-/**
- * recupere les ustensils de recipes
- * @returns { array } ustensils
- */
-const Ustensils = removeDuplicates(UstensilsAll());
-function UstensilsAll() {
-    let result = [];
-    let i = 0;
-    recettes.forEach(function (recette) {
-        recette['ustensils'].forEach(function (ustensil) {
-            result[i] = ustensil;
-            i++;
-        })
-    })
-    return result;
-}
-//console.log(Ustensils);
-
-/**
- * recupere les appareilles de recipes
- * @returns { array } appareilles
- */
-const Appareilles = removeDuplicates(AppareillesAll());
-function AppareillesAll() {
-    let result = [];
-    let i = 0;
-    recettes.forEach(function (recette) {
-        result[i] = recette['appliance'];
-        i++;
-    })
-    return result;
-}
-/**
- * 
- * @param { array } array 
- * @param { string } input 
- * @returns { boolean }
- */
-function isInputInArray(array,input){
-    let resultat = false;
-    for (let a = 0; a < array.length; a++) {
-        if (array[a].toLowerCase().includes(input)) {
-            resultat = true;
-        }
-    }
-    return resultat;
-}
-
-/**
- * vérifie si l'input est dans un ingredient
- * @param { array } ingredients 
- * @param { string } input 
- * @returns { boolean }
- */
-function isIngredient(ingredients, input) {
-    let resultat = false;
-    for (let a = 0; a < ingredients.length; a++) {
-        if (ingredients[a]['ingredient'].toLowerCase().includes(input)) {
-            resultat = true;
-        }
-    }
-    return resultat;
-}
-
-function getRecherche(input){
-    let resultat = [];
-    let u = 0;
-    for (let i = 0; i < recipes.length; i++) {
-        if (recipes[i]['name'].toLowerCase().includes(input)) {
-            resultat[u] = recipes[i];
-            u++;
-        } else if (isIngredient(recipes[i]['ingredients'], input)) {
-            resultat[u] = recipes[i];
-            u++;
-        } else if (recipes[i]['description'].toLowerCase().includes(input)) {
-            resultat[u] = recipes[i];
-            u++;
-        }
-    }
-    return resultat;
-}
-
-/**
- * affiche les recettes des filtres + de la recherche
- * @param { array } arrayRecettes 
- * @param { string } input pas obligatoire
- */
-async function getRechercheRecette(arrayRecettes) {
-    if (arrayRecettes.length > 0) {
-        document.querySelector('#recette').innerHTML = "";
-        await displayData(arrayRecettes);
-    } else {
-        document.querySelector('#recette').textContent = 'Aucune recettes trouver.';
-    }
-
-}
 
 /**
  * regroupe tous les filtres et les affiche
  */
-async function recherche_recette() {
-
-    let ingredients = await recherche_Ingredients_recette();
-    let ustensils = await recherche_Ustensils_recette();
-    let appareilles = await recherche_Appareilles_recette();
-    //console.log(appareilles);
+function recherche_recette() {
 
     let input = document.getElementById('barreRecherche').value;
 
-    input = input.toLowerCase();
-
-    recettes = getRecherche(input);
+    recettes = getRecherche(input, recipes);
+    let ingredients = recherche_Ingredients_recette(document.getElementById('rechercheIngredients'), recipes);
+    let ustensils = recherche_Ustensils_recette(document.getElementById('rechercheUstensils'), recipes);
+    let appareilles = recherche_Appareilles_recette(document.getElementById('rechercheAppareilles'), recipes);
 
     let result = [];
     let a = 0;
@@ -276,18 +122,18 @@ async function recherche_recette() {
     recettes = result;
     result = [];
     a = 0;
-    for (let i = 0; i < ustensils.length; i++) {
-        if (isRecette(ustensils[i], recettes)) {
-            result[a] = ustensils[i];
+    for (let i = 0; i < appareilles.length; i++) {
+        if (isRecette(appareilles[i], recettes)) {
+            result[a] = appareilles[i];
             a++;
         }
     }
     recettes = result;
     result = [];
     a = 0;
-    for (let i = 0; i < appareilles.length; i++) {
-        if (isRecette(appareilles[i], recettes)) {
-            result[a] = appareilles[i];
+    for (let i = 0; i < ustensils.length; i++) {
+        if (isRecette(ustensils[i], recettes)) {
+            result[a] = ustensils[i];
             a++;
         }
     }
@@ -303,160 +149,4 @@ async function recherche_recette() {
     } else if (input.length >= 3) {
         getRechercheRecette(recettes, input);
     }
-}
-
-/**
- * recupere les recettes filtre par ingredients
- */
-async function recherche_Ingredients_recette() {
-
-    let input = document.getElementById('rechercheIngredients').value;
-    input = input.toLowerCase();
-    let resultat = "";
-    let result = [];
-    let u = 0;
-
-    if (input != '') {
-        recipes.forEach(function (recette) {
-            input.split('; ').forEach(function (ingredient) {
-                if (ingredient != '' && isIngredient(recette['ingredients'], ingredient)) {
-                    for (let a = 0; a < recette['ingredients'].length; a++) {
-                        let mot_cle = resultat.toLowerCase().split('; ');
-                        if (recette['ingredients'][a]['ingredient'].toLowerCase().includes(ingredient) && !mot_cle.includes(recette['ingredients'][a]['ingredient'].toLowerCase())) {
-                            resultat += recette['ingredients'][a]['ingredient'] + '; ';
-                        }
-                    }
-                    if (result.length > 0) {
-                        if (result[u - 1]['id'] != recette['id']) {
-                            result[u] = recette;
-                            u++;
-                        }
-                    } else {
-                        result[u] = recette;
-                        u++;
-                    }
-
-                }
-            })
-        });
-        return result;
-    } else {
-        return recipes;
-    }
-}
-
-/**
- * recupere les recettes filtre par appareilles
- */
-async function recherche_Appareilles_recette() {
-
-    let input = document.getElementById('rechercheAppareilles').value;
-    input = input.toLowerCase();
-    let resultat = "";
-    let result = [];
-    let u = 0;
-
-    if (input != '') {
-        recipes.forEach(function (recette) {
-            input.split('; ').forEach(function (appareille) {
-                let mot_cle = resultat.toLowerCase().split('; ');
-                if (appareille != '' && recette['appliance'].toLowerCase().includes(appareille)) {
-                    if (mot_cle.includes(recette['appliance'].toLowerCase())) {
-                        resultat += recette['appliance'] + '; ';
-                    }
-                    if (result.length > 0) {
-                        if (result[u - 1]['id'] != recette['id']) {
-                            result[u] = recette;
-                            u++;
-                        }
-                    } else {
-                        result[u] = recette;
-                        u++;
-                    }
-                }
-            })
-        });
-        return result;
-    } else {
-        return recipes;
-    }
-}
-
-/**
- * recupere les recettes filtre par ustensil
- */
-async function recherche_Ustensils_recette() {
-
-    let input = document.getElementById('rechercheUstensils').value;
-    input = input.toLowerCase();
-    let resultat = "";
-    let result = [];
-    let u = 0;
-
-    if (input != '') {
-        recipes.forEach(function (recette) {
-            input.split('; ').forEach(function (Ustensil) {
-                if (isUstensil(recette['ustensils'], Ustensil)) {
-                    for (let a = 0; a < recette['ustensils'].length; a++) {
-                        let mot_cle = resultat.toLowerCase().split('; ');
-                        if (Ustensil != '' && recette['ustensils'][a].toLowerCase().includes(Ustensil) && !mot_cle.includes(recette['ustensils'][a].toLowerCase())) {
-                            resultat += recette['ustensils'][a] + '; ';
-                        }
-                    }
-                    if (result.length > 0) {
-                        if (result[u - 1]['id'] != recette['id']) {
-                            result[u] = recette;
-                            u++;
-                        }
-                    } else {
-                        result[u] = recette;
-                        u++;
-                    }
-
-                }
-            })
-        });
-        return result;
-    } else {
-        return recipes;
-    }
-}
-
-/**
- * verifie si la recette existe dans l'array
- * @param { Object } recette 
- * @param { Array } arrayRecettes 
- * @returns { Boolean }
- */
-function isRecette(recette, arrayRecettes) {
-    for (let u = 0; u < arrayRecettes.length; u++) {
-        if (arrayRecettes[u]['id'] == recette['id']) {
-            return true;
-        }
-    }
-    return false;
-}
-
-/**
- * vérifie si l'input est dans un ustensil
- * @param { array } ustensils 
- * @param { string } input 
- * @returns { boolean }
- */
-function isUstensil(ustensils, input) {
-    for (let a = 0; a < ustensils.length; a++) {
-        if (ustensils[a].toLowerCase().includes(input)) {
-            return true;
-        }
-    }
-    return false;
-}
-
-function isRecetteIngredient(recette, ingredient) {
-    for (let i = 0; i < recette['ingredients'].length; i++) {
-        if (recette['ingredients'][i]['ingredient'] == ingredient['ingredient']) {
-            return true;
-        }
-    }
-    return false;
 }

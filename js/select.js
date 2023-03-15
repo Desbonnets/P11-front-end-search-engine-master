@@ -4,6 +4,9 @@ function changeAutoComplete(target, ulField, color, array) {
     if (data.length) {
         let autoCompleteValues = autoComplete(data, array);
         autoCompleteValues.forEach(value => { addItem(value, ulField, color); });
+    }else{
+        displayDropdown(array, ulField, color);
+        recherche_recette();
     }
 }
 
@@ -20,7 +23,6 @@ function autoComplete(inputValue, array) {
 }
 
 function addItem(value, ulField, color) {
-    console.log(ulField.querySelector('.container .row').childElementCount);
     if(ulField.querySelector('.container .row').childElementCount <= 25){
         ulField.querySelector('.container .row').innerHTML = ulField.querySelector('.container .row').innerHTML + `<div id="`+(ulField.childElementCount+1)+`" class="`+color+` text-white p-2 ps-2 col">${value}</div>`;
     }
@@ -69,7 +71,7 @@ let inputFieldU = document.getElementById('rechercheUstensils');
 let ulFieldU = document.getElementById('suggestionsU');
 let estSurvole = false;
 
-inputFieldA.addEventListener('input', async function(e) {changeAutoComplete(e.target, ulFieldA, 'itemA', await removeDuplicates(AppareillesAll()))});
+inputFieldA.addEventListener('input', function(e) {changeAutoComplete(e.target, ulFieldA, 'itemA', AppareillesAll())});
 ulFieldA.addEventListener("mouseover", function (event) {
     estSurvole = true;
 });
@@ -77,8 +79,8 @@ ulFieldA.addEventListener("mouseover", function (event) {
 ulFieldA.addEventListener("mouseout", function (event) {
     estSurvole = false;
 });
-inputFieldA.addEventListener('focus', async function () {
-    displayDropdown(await removeDuplicates(AppareillesAll()), ulFieldA, 'itemA');
+inputFieldA.addEventListener('focus', function () {
+    displayDropdown(AppareillesAll(), ulFieldA, 'itemA');
     ulFieldA.setAttribute('class', 'dropdown-menu bg-success show');
 });
 inputFieldA.addEventListener('focusout', function () {
@@ -90,7 +92,7 @@ inputFieldA.addEventListener('focusout', function () {
 ulFieldA.addEventListener('click', function (e){selectItem(e.target,inputFieldA,ulFieldA)});
 ulFieldA.addEventListener('click', recherche_recette);
 
-inputFieldI.addEventListener('input', async function(e) {changeAutoComplete(e.target, ulFieldI, 'itemI', await removeDuplicates(IngredientsAll()))});
+inputFieldI.addEventListener('input', function(e) {changeAutoComplete(e.target, ulFieldI, 'itemI', IngredientsAll())});
 ulFieldI.addEventListener("mouseover", function (event) {
     estSurvole = true;
 });
@@ -98,8 +100,8 @@ ulFieldI.addEventListener("mouseover", function (event) {
 ulFieldI.addEventListener("mouseout", function (event) {
     estSurvole = false;
 });
-inputFieldI.addEventListener('focus', async function () {
-    displayDropdown(await removeDuplicates(IngredientsAll()), ulFieldI, 'itemI');
+inputFieldI.addEventListener('focus', function () {
+    displayDropdown(IngredientsAll(), ulFieldI, 'itemI');
     ulFieldI.setAttribute('class', 'dropdown-menu bg-primary show');
 });
 inputFieldI.addEventListener('focusout', function () {
@@ -111,7 +113,7 @@ inputFieldI.addEventListener('focusout', function () {
 ulFieldI.addEventListener('click', function (e){selectItem(e.target,inputFieldI,ulFieldI)});
 ulFieldI.addEventListener('click', recherche_recette);
 
-inputFieldU.addEventListener('input', async function(e) {changeAutoComplete(e.target, ulFieldU, 'itemU',await removeDuplicates(UstensilsAll()))});
+inputFieldU.addEventListener('input', function(e) {changeAutoComplete(e.target, ulFieldU, 'itemU', UstensilsAll())});
 ulFieldU.addEventListener("mouseover", function (event) {
     estSurvole = true;
 });
@@ -119,8 +121,8 @@ ulFieldU.addEventListener("mouseover", function (event) {
 ulFieldU.addEventListener("mouseout", function (event) {
     estSurvole = false;
 });
-inputFieldU.addEventListener('focus', async function () {
-    displayDropdown(await removeDuplicates(UstensilsAll()), ulFieldU, 'itemU');
+inputFieldU.addEventListener('focus', function () {
+    displayDropdown(UstensilsAll(), ulFieldU, 'itemU');
     ulFieldU.setAttribute('class', 'dropdown-menu bg-danger show');
 });
 inputFieldU.addEventListener('focusout', function () {
