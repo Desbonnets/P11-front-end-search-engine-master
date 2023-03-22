@@ -20,6 +20,8 @@ function isRecette(recette, arrayRecettes) {
  * @returns { boolean }
  */
 function isRecetteIngredient(recette, ingredient) {
+    console.log('bonjour');
+    console.log(recette['ingredients'].filter(ingre => ingre['ingredient'] == ingredient['ingredient']));
     for (let i = 0; i < recette['ingredients'].length; i++) {
         if (recette['ingredients'][i]['ingredient'] == ingredient['ingredient']) {
             return true;
@@ -49,38 +51,17 @@ function isUstensil(ArrayUstensils, ustensil) {
  * @param { Array } recipes Array de recette
  * @returns { Array } un array des recettes
  */
-async function recherche_Ustensils_recette(input, recipes) {
+function recherche_Ustensils_recette(input, recipes) {
 
     input = input.value.toLowerCase();
-    let resultat = "";
     let result = [];
-    let u = 0;
 
     if (input != '') {
-        recipes.forEach(function (recette) {
-            input.split('; ').forEach(function (Ustensil) {
-                if (Ustensil != ""){
-                    if (isUstensil(recette['ustensils'], Ustensil)) {
-                        for (let a = 0; a < recette['ustensils'].length; a++) {
-                            let mot_cle = resultat.toLowerCase().split('; ');
-                            if (Ustensil != '' && recette['ustensils'][a].toLowerCase().includes(Ustensil) && !mot_cle.includes(recette['ustensils'][a].toLowerCase())) {
-                                resultat += recette['ustensils'][a] + '; ';
-                            }
-                        }
-                        if (result.length > 0) {
-                            if (result[u - 1]['id'] != recette['id']) {
-                                result[u] = recette;
-                                u++;
-                            }
-                        } else {
-                            result[u] = recette;
-                            u++;
-                        }
-
-                    }
-                }
-            })
+        
+        input.split('; ').filter(Boolean).forEach(function (Ustensil) {
+            result.push(...recipes.filter(recipe => recipe['ustensils'].filter(ustensil => ustensil.toLowerCase().includes(Ustensil)).length > 0));
         });
+        
         return result;
     } else {
         return recipes;
@@ -93,33 +74,17 @@ async function recherche_Ustensils_recette(input, recipes) {
  * @param { Array } recipes Array de recette
  * @returns { Array } un array des recettes
  */
-async function recherche_Appareilles_recette(input, recipes) {
+function recherche_Appareilles_recette(input, recipes) {
 
     input = input.value.toLowerCase();
-    let resultat = "";
     let result = [];
-    let u = 0;
 
     if (input != '') {
-        recipes.forEach(function (recette) {
-            input.split('; ').forEach(function (appareille) {
-                let mot_cle = resultat.toLowerCase().split('; ');
-                if (appareille != '' && recette['appliance'].toLowerCase().includes(appareille)) {
-                    if (mot_cle.includes(recette['appliance'].toLowerCase())) {
-                        resultat += recette['appliance'] + '; ';
-                    }
-                    if (result.length > 0) {
-                        if (result[u - 1]['id'] != recette['id']) {
-                            result[u] = recette;
-                            u++;
-                        }
-                    } else {
-                        result[u] = recette;
-                        u++;
-                    }
-                }
-            })
+
+        input.split('; ').filter(Boolean).forEach(function (Appareille) {
+            result.push(...recipes.filter(recipe => recipe['appliance'].toLowerCase().includes(Appareille)));
         });
+
         return result;
     } else {
         return recipes;
@@ -132,36 +97,17 @@ async function recherche_Appareilles_recette(input, recipes) {
  * @param { Array } recipes Array de recette
  * @returns { Array } un array des recettes
  */
-async function recherche_Ingredients_recette(input,recipes) {
+function recherche_Ingredients_recette(input,recipes) {
 
     input = input.value.toLowerCase();
-    let resultat = "";
     let result = [];
-    let u = 0;
 
     if (input != '') {
-        recipes.forEach(function (recette) {
-            input.split('; ').forEach(function (ingredient) {
-                if (ingredient != '' && isIngredient(recette['ingredients'], ingredient)) {
-                    for (let a = 0; a < recette['ingredients'].length; a++) {
-                        let mot_cle = resultat.toLowerCase().split('; ');
-                        if (recette['ingredients'][a]['ingredient'].toLowerCase().includes(ingredient) && !mot_cle.includes(recette['ingredients'][a]['ingredient'].toLowerCase())) {
-                            resultat += recette['ingredients'][a]['ingredient'] + '; ';
-                        }
-                    }
-                    if (result.length > 0) {
-                        if (result[u - 1]['id'] != recette['id']) {
-                            result[u] = recette;
-                            u++;
-                        }
-                    } else {
-                        result[u] = recette;
-                        u++;
-                    }
 
-                }
-            })
+        input.split('; ').filter(Boolean).forEach(function (Ingredient) {
+            result.push(...recipes.filter(recipe => recipe['ingredients'].filter(ingredient => ingredient['ingredient'].toLowerCase().includes(Ingredient)).length > 0));
         });
+
         return result;
     } else {
         return recipes;
@@ -192,18 +138,19 @@ function getRecherche(input, recipes){
     input = input.toLowerCase();
     let resultat = [];
     let u = 0;
-    for (let i = 0; i < recipes.length; i++) {
-        if (recipes[i]['name'].toLowerCase().includes(input)) {
-            resultat[u] = recipes[i];
+    recipes.forEach((Recette) => {
+        if (Recette['name'].toLowerCase().includes(input)) {
+            resultat[u] = Recette;
             u++;
-        } else if (isIngredient(recipes[i]['ingredients'], input)) {
-            resultat[u] = recipes[i];
+        } else if (isIngredient(Recette['ingredients'], input)) {
+            resultat[u] = Recette;
             u++;
-        } else if (recipes[i]['description'].toLowerCase().includes(input)) {
-            resultat[u] = recipes[i];
+        } else if (Recette['description'].toLowerCase().includes(input)) {
+            resultat[u] = Recette;
             u++;
         }
-    }
+    })
+    
     return resultat;
 }
 
@@ -215,11 +162,11 @@ function getRecherche(input, recipes){
  */
 function isInputInArray(array,input){
     let resultat = false;
-    for (let a = 0; a < array.length; a++) {
-        if (array[a].toLowerCase().includes(input)) {
+    array.forEach((element)=>{
+        if (element.toLowerCase().includes(input)) {
             resultat = true;
         }
-    }
+    })
     return resultat;
 }
 
@@ -231,11 +178,12 @@ function isInputInArray(array,input){
  */
 function isIngredient(ingredients, input) {
     let resultat = false;
-    for (let a = 0; a < ingredients.length; a++) {
-        if (ingredients[a]['ingredient'].toLowerCase().includes(input)) {
+    ingredients.forEach((ingredient) =>{
+        if (ingredient['ingredient'].toLowerCase().includes(input)) {
             resultat = true;
         }
-    }
+    });
+
     return resultat;
 }
 
@@ -247,7 +195,7 @@ const Appareilles = AppareillesAll();
 function AppareillesAll() {
     let result = [];
     let i = 0;
-    recettes.forEach(function (recette) {
+    recettes.forEach((recette) => {
         result[i] = recette['appliance'];
         i++;
     })
@@ -262,7 +210,7 @@ const Ustensils = UstensilsAll();
 function UstensilsAll() {
     let result = [];
     let i = 0;
-    recettes.forEach(function (recette) {
+    recettes.forEach((recette) => {
         recette['ustensils'].forEach(function (ustensil) {
             result[i] = ustensil;
             i++;
@@ -278,9 +226,9 @@ function UstensilsAll() {
 function IngredientsAll() {
     let result = [];
     let i = 0;
-    recettes.forEach(function (recette) {
+    recettes.forEach((recette) => {
         if (result.length > 0) {
-            recette['ingredients'].forEach(function (element) {
+            recette['ingredients'].forEach((element) => {
                 if (!isInputInArray(result,  element['ingredient'].toLowerCase())) {
                     result[i] = element['ingredient'];
                     i++;
@@ -289,7 +237,7 @@ function IngredientsAll() {
                 }
             });
         } else {
-            recette['ingredients'].forEach(function (element) {
+            recette['ingredients'].forEach((element) => {
                 result[i] = element['ingredient'];
                 i++;
             })
@@ -299,19 +247,16 @@ function IngredientsAll() {
 };
 
 /**
- * 
+ * supprime les duplications
  * @param { Array } array 
  * @returns { Array }
  */
 function removeDuplicates(array) {
 
-    // Declare a new array
     let newArray = [];
 
-    // Declare an empty object
     let uniqueObject = {};
 
-    // Loop for the array elements
     for (let i in array) {
 
         obj = array[i];
@@ -319,7 +264,6 @@ function removeDuplicates(array) {
         uniqueObject[obj] = array[i];
     }
 
-    // Loop to push unique object into array
     for (i in uniqueObject) {
         newArray.push(uniqueObject[i]);
     }

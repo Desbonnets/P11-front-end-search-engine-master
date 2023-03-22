@@ -1,3 +1,10 @@
+/**
+ * Gère l'auto completion
+ * @param { Element } target 
+ * @param { Element } ulField 
+ * @param { String } color 
+ * @param { Array } array 
+ */
 function changeAutoComplete(target, ulField, color, array) {
     let data = target.value;
     ulField.querySelector('.container .row').innerHTML = ``;
@@ -10,6 +17,12 @@ function changeAutoComplete(target, ulField, color, array) {
     }
 }
 
+/**
+ * retourne le filtre de l'array paraport a l'input
+ * @param { String } inputValue 
+ * @param { Array } array 
+ * @returns { Array }
+ */
 function autoComplete(inputValue, array) {
     let newValues = '';
     if (inputValue.split('; ').length > 0) {
@@ -22,12 +35,24 @@ function autoComplete(inputValue, array) {
     );
 }
 
+/**
+ * ajoute un item dans l'element
+ * @param { String } value 
+ * @param { Element } ulField 
+ * @param { String } color 
+ */
 function addItem(value, ulField, color) {
     if(ulField.querySelector('.container .row').childElementCount <= 25){
         ulField.querySelector('.container .row').innerHTML = ulField.querySelector('.container .row').innerHTML + `<div id="`+(ulField.childElementCount+1)+`" class="`+color+` text-white p-2 ps-2 col">${value}</div>`;
     }
 }
 
+ /**
+  * Gére la selection d'un item
+  * @param { Element } target 
+  * @param { Element } inputField 
+  * @param { Element } ulField 
+  */
 function selectItem(target,inputField,ulField) {
     if (Number.isInteger(parseInt(target.id,10))) {
         let result = [];
@@ -44,7 +69,14 @@ function selectItem(target,inputField,ulField) {
         ulField.setAttribute('class', 'dropdown-menu');
         estSurvole = false;
     }
-}
+} 
+
+/**
+ * Affiche le dropdown
+ * @param { Array } array 
+ * @param { Element } ulField 
+ * @param { String } color 
+ */
 function displayDropdown(array, ulField, color) {
     let id = 0;
     for (let i = 0; i <array.length; i++) {
@@ -62,6 +94,9 @@ function displayDropdown(array, ulField, color) {
     }
 }
 
+//////////////////////////////////////////////////////////////////
+/////////////////////// Gestion des event ////////////////////////
+//////////////////////////////////////////////////////////////////
 
 let inputFieldI = document.getElementById('rechercheIngredients');
 let ulFieldI = document.getElementById('suggestionsI');

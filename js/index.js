@@ -1,9 +1,18 @@
-
+/**
+ * 
+ * @param { Recette } data 
+ * @returns une recette en element fonction DOM
+ */
 function recetteFactory(data) {
     //déstructuration du json
     const { name, ingredients, time, description, ustensils } = data;
 
+    /**
+     * créer la card d'une recette
+     * @returns { Element }
+     */
     function getRecetteCardDOM() {
+
         //creation des elements
         const article = document.createElement('article');
         const divCard = document.createElement('div');
@@ -54,8 +63,8 @@ function recetteFactory(data) {
 
         descriptions.textContent = description;
 
-        //organisation (parents/enfants) des elements
 
+        //organisation (parents/enfants) des elements
         divContenu.appendChild(divHeader);
         divHeader.appendChild(titre);
         divHeader.appendChild(temps);
@@ -71,22 +80,23 @@ function recetteFactory(data) {
     return { name, ingredients, time, description, ustensils, getRecetteCardDOM }
 }
 
+
 /**
  * Affiche les recettes
  * @param { array } recettes
  */
 async function displayData(recette) {
+
     const recetteDiv = document.querySelector("#recette");
-    //const divRow = document.createElement('div');
+
     recette.forEach((recette) => {
-        //    divRow.setAttribute('class','row row-cols-3');
         const recetteModel = recetteFactory(recette);
         const userCardDOM = recetteModel.getRecetteCardDOM();
         recetteDiv.appendChild(userCardDOM);
-        //    divRow.appendChild(userCardDOM);
     });
-    //recetteDiv.appendChild(divRow);
+
 };
+
 
 /**
  * initialise la page
@@ -96,7 +106,9 @@ async function init() {
 };
 
 init();
-
+/**
+ * @var { Array } array de recettes
+ */
 let recettes = recipes;
 
 /**
@@ -113,30 +125,33 @@ function recherche_recette() {
 
     let result = [];
     let a = 0;
-    for (let i = 0; i < ingredients.length; i++) {
-        if (isRecette(ingredients[i], recettes)) {
-            result[a] = ingredients[i];
+    ingredients.forEach((ingredient) => {
+        if (isRecette(ingredient, recettes)) {
+            result[a] = ingredient;
             a++;
         }
-    }
+    });
+
     recettes = result;
     result = [];
     a = 0;
-    for (let i = 0; i < appareilles.length; i++) {
-        if (isRecette(appareilles[i], recettes)) {
-            result[a] = appareilles[i];
+    appareilles.forEach((appareille) => {
+        if (isRecette(appareille, recettes)) {
+            result[a] = appareille;
             a++;
         }
-    }
+    });
+
     recettes = result;
     result = [];
     a = 0;
-    for (let i = 0; i < ustensils.length; i++) {
-        if (isRecette(ustensils[i], recettes)) {
-            result[a] = ustensils[i];
+    ustensils.forEach((ustensil) =>{
+        if (isRecette(ustensil, recettes)) {
+            result[a] = ustensil;
             a++;
         }
-    }
+    });
+
     recettes = result;
 
     if (input.length < 3 && document.getElementById('rechercheAppareilles').value == "" && document.getElementById('rechercheUstensils').value == "" && document.getElementById('rechercheIngredients').value == "") {
@@ -147,6 +162,6 @@ function recherche_recette() {
     } else if (input.length < 3 && document.getElementById('rechercheAppareilles').value != "" || input.length < 3 && document.getElementById('rechercheUstensils').value != "" || input.length < 3 && document.getElementById('rechercheIngredients').value != "") {
         getRechercheRecette(recettes);
     } else if (input.length >= 3) {
-        getRechercheRecette(recettes, input);
+        getRechercheRecette(recettes);
     }
 }
