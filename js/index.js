@@ -154,12 +154,15 @@ function recherche_recette() {
 
     recettes = result;
 
-    if (input.length < 3 && document.getElementById('rechercheAppareilles').value == "" && document.getElementById('rechercheUstensils').value == "" && document.getElementById('rechercheIngredients').value == "") {
+    if (input.length < 3 && document.getElementById('tags').children.length <= 0) {
 
         document.querySelector('#recette').innerHTML = "";
         recettes = recipes;
         init();
-    } else if (input.length < 3 && document.getElementById('rechercheAppareilles').value != "" || input.length < 3 && document.getElementById('rechercheUstensils').value != "" || input.length < 3 && document.getElementById('rechercheIngredients').value != "") {
+    } else if (input.length < 3 && document.getElementById('tags').children.length > 0) {
+        document.getElementById('rechercheIngredients').value = '';
+        document.getElementById('rechercheUstensils').value = '';
+        document.getElementById('rechercheAppareilles').value = '';
         getRechercheRecette(recettes);
     } else if (input.length >= 3) {
         getRechercheRecette(recettes);

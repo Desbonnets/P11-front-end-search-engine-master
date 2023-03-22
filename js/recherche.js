@@ -56,9 +56,18 @@ function recherche_Ustensils_recette(input, recipes) {
     input = input.value.toLowerCase();
     let result = [];
 
-    if (input != '') {
+    let stringTags = '';
+    let tags = document.querySelectorAll('#tags [name="itemU"]');
+
+    tags.forEach((tag)=>{
+        stringTags += tag.textContent.toLowerCase()+'; ';
+    })
+
+    stringTags += input;
+
+    if (stringTags != '') {
         
-        input.split('; ').filter(Boolean).forEach(function (Ustensil) {
+        stringTags.split('; ').filter(Boolean).forEach(function (Ustensil) {
             result.push(...recipes.filter(recipe => recipe['ustensils'].filter(ustensil => ustensil.toLowerCase().includes(Ustensil)).length > 0));
         });
         
@@ -78,10 +87,18 @@ function recherche_Appareilles_recette(input, recipes) {
 
     input = input.value.toLowerCase();
     let result = [];
+    let stringTags = '';
+    let tags = document.querySelectorAll('#tags [name="itemA"]');
 
-    if (input != '') {
+    tags.forEach((tag)=>{
+        stringTags += tag.textContent.toLowerCase()+'; ';
+    })
 
-        input.split('; ').filter(Boolean).forEach(function (Appareille) {
+    stringTags += input;
+
+    if (stringTags != '') {
+
+        stringTags.split('; ').filter(Boolean).forEach(function (Appareille) {
             result.push(...recipes.filter(recipe => recipe['appliance'].toLowerCase().includes(Appareille)));
         });
 
@@ -100,14 +117,20 @@ function recherche_Appareilles_recette(input, recipes) {
 function recherche_Ingredients_recette(input,recipes) {
 
     input = input.value.toLowerCase();
+    let stringTags = '';
+    let tags = document.querySelectorAll('#tags [name="itemI"]');
+
+    tags.forEach((tag)=>{
+        stringTags += tag.textContent.toLowerCase()+'; ';
+    })
+    stringTags += input;
     let result = [];
 
-    if (input != '') {
+    if (stringTags != '') {
 
-        input.split('; ').filter(Boolean).forEach(function (Ingredient) {
+        stringTags.split('; ').filter(Boolean).forEach(function (Ingredient) {
             result.push(...recipes.filter(recipe => recipe['ingredients'].filter(ingredient => ingredient['ingredient'].toLowerCase().includes(Ingredient)).length > 0));
         });
-
         return result;
     } else {
         return recipes;
@@ -123,7 +146,7 @@ async function getRechercheRecette(arrayRecettes) {
         document.querySelector('#recette').innerHTML = "";
         await displayData(arrayRecettes);
     } else {
-        document.querySelector('#recette').textContent = 'Aucune recettes trouver.';
+        document.querySelector('#recette').textContent = 'Aucune recette ne correspond à votre critère… vous pouvez chercher « tarte aux pommes », « poisson », etc';
     }
 
 }

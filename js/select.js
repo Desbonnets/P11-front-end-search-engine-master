@@ -6,14 +6,34 @@
  * @param { Array } array 
  */
 function changeAutoComplete(target, ulField, color, array) {
+    let tags = document.querySelectorAll('#tags [name="'+color+'"]');
+    tags.forEach((tag)=>{
+        array = array.filter(arg =>  arg != tag.textContent);
+    });
     let data = target.value;
     ulField.querySelector('.container .row').innerHTML = ``;
     if (data.length) {
         let autoCompleteValues = autoComplete(data, array);
         autoCompleteValues.forEach(value => { addItem(value, ulField, color); });
     }else{
-        displayDropdown(array, ulField, color);
         recherche_recette();
+        if(target.id == 'rechercheIngredients'){
+            array = IngredientsAll();
+            tags.forEach((tag)=>{
+                array = array.filter(arg =>  arg != tag.textContent);
+            });
+        }else if(target.id == 'rechercheUstensils'){
+            array = UstensilsAll();
+            tags.forEach((tag)=>{
+                array = array.filter(arg =>  arg != tag.textContent);
+            });
+        }else if(target.id == 'rechercheAppareilles'){
+            array = AppareillesAll();
+            tags.forEach((tag)=>{
+                array = array.filter(arg =>  arg != tag.textContent);
+            });
+        }
+        displayDropdown(array, ulField, color);
     }
 }
 
@@ -50,18 +70,12 @@ function addItem(value, ulField, color) {
  /**
   * Gére la selection d'un item
   * @param { Element } target 
-  * @param { Element } inputField 
   * @param { Element } ulField 
   */
-function selectItem(target,inputField,ulField) {
+function selectItem(target,ulField,color) {
     if (Number.isInteger(parseInt(target.id,10))) {
-        let result = [];
-        if (inputField.value.split('; ').length > 0) {
-            result = inputField.value.split('; ');
-            result.pop();
-        }
-        result.push(target.textContent);
-        inputField.value = result.join('; ') + '; ';
+
+        displayTag(target, color);
         ulField.setAttribute('class', 'dropdown-menu');
         ulField.querySelector('.container .row').innerHTML = '';
         estSurvole = false;
@@ -78,6 +92,10 @@ function selectItem(target,inputField,ulField) {
  * @param { String } color 
  */
 function displayDropdown(array, ulField, color) {
+    let tags = document.querySelectorAll('#tags [name="'+color+'"]');
+    tags.forEach((tag)=>{
+        array = array.filter(arg =>  arg != tag.textContent);
+    });
     let id = 0;
     for (let i = 0; i <array.length; i++) {
         if (array.length > id) {
@@ -92,6 +110,30 @@ function displayDropdown(array, ulField, color) {
             }
         }
     }
+}
+
+function displayTag(element, color) {
+    let newTag = document.createElement('button');
+    let tags  = document.getElementById('tags');
+    
+    if(color == 'itemA'){
+        newTag.setAttribute('name',color);
+        color = 'btn-success';
+    }else if(color == 'itemI'){
+        newTag.setAttribute('name',color);
+        color = 'btn-primary';
+    }else if(color == 'itemU'){
+        newTag.setAttribute('name',color);
+        color = 'btn-danger';
+    }
+     
+    newTag.setAttribute('type','button'); 
+    newTag.setAttribute('class','btn btn-sm text-white col me-2 '+color); 
+    newTag.setAttribute('id', element.innerHTML.replace(/ /g,'_'));
+    newTag.textContent = element.innerHTML;
+    tags.appendChild(newTag);
+    newTag.addEventListener('click',(e) => e.target.remove());
+    newTag.addEventListener('click', recherche_recette);
 }
 
 //////////////////////////////////////////////////////////////////
@@ -124,7 +166,7 @@ inputFieldA.addEventListener('focusout', function () {
         ulFieldA.querySelector('.container .row').innerHTML = '';
     }
 });
-ulFieldA.addEventListener('click', function (e){selectItem(e.target,inputFieldA,ulFieldA)});
+ulFieldA.addEventListener('click', function (e){selectItem(e.target,ulFieldA,'itemA');});
 ulFieldA.addEventListener('click', recherche_recette);
 
 inputFieldI.addEventListener('input', function(e) {changeAutoComplete(e.target, ulFieldI, 'itemI', IngredientsAll())});
@@ -145,7 +187,7 @@ inputFieldI.addEventListener('focusout', function () {
         ulFieldI.querySelector('.container .row').innerHTML = '';
     }
 });
-ulFieldI.addEventListener('click', function (e){selectItem(e.target,inputFieldI,ulFieldI)});
+ulFieldI.addEventListener('click', function (e){selectItem(e.target,ulFieldI,'itemI')});
 ulFieldI.addEventListener('click', recherche_recette);
 
 inputFieldU.addEventListener('input', function(e) {changeAutoComplete(e.target, ulFieldU, 'itemU', UstensilsAll())});
@@ -166,5 +208,5 @@ inputFieldU.addEventListener('focusout', function () {
         ulFieldU.querySelector('.container .row').innerHTML = '';
     }
 });
-ulFieldU.addEventListener('click', function (e){selectItem(e.target,inputFieldU,ulFieldU)});
+ulFieldU.addEventListener('click', function (e){selectItem(e.target,ulFieldU,'itemU')});
 ulFieldU.addEventListener('click', recherche_recette);
