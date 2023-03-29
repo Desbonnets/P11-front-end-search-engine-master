@@ -7,3 +7,12 @@
 .itemU:hover{
     background-color: var(--bs-danger-text);
 }
+.itemA{
+    min-width: 140px;
+}
+.itemI{
+    min-width: 140px;
+}
+.itemU{
+    min-width: 140px;
+}
