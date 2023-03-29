@@ -157,7 +157,11 @@ ulFieldA.addEventListener("mouseout", function (event) {
     estSurvole = false;
 });
 inputFieldA.addEventListener('focus', function () {
-    displayDropdown(AppareillesAll(), ulFieldA, 'itemA');
+    if(inputFieldA.value == "" || inputFieldA.value == undefined){
+        displayDropdown(AppareillesAll(), ulFieldA, 'itemA');
+    }else{
+        changeAutoComplete(e.target, ulFieldA, 'itemA', AppareillesAll());
+    }
     ulFieldA.setAttribute('class', 'dropdown-menu bg-success show');
 });
 inputFieldA.addEventListener('focusout', function () {
@@ -178,7 +182,11 @@ ulFieldI.addEventListener("mouseout", function (event) {
     estSurvole = false;
 });
 inputFieldI.addEventListener('focus', function () {
-    displayDropdown(IngredientsAll(), ulFieldI, 'itemI');
+    if(inputFieldI.value == "" || inputFieldI.value == undefined){
+        displayDropdown(IngredientsAll(), ulFieldI, 'itemI');
+    }else{
+        changeAutoComplete(e.target, ulFieldI, 'itemI', IngredientsAll());
+    }
     ulFieldI.setAttribute('class', 'dropdown-menu bg-primary show');
 });
 inputFieldI.addEventListener('focusout', function () {
@@ -199,7 +207,11 @@ ulFieldU.addEventListener("mouseout", function (event) {
     estSurvole = false;
 });
 inputFieldU.addEventListener('focus', function () {
-    displayDropdown(UstensilsAll(), ulFieldU, 'itemU');
+    if(inputFieldU.value == "" || inputFieldU.value == undefined){
+        displayDropdown(UstensilsAll(), ulFieldU, 'itemU');
+    }else{
+        changeAutoComplete(e.target, ulFieldU, 'itemU', UstensilsAll());
+    }
     ulFieldU.setAttribute('class', 'dropdown-menu bg-danger show');
 });
 inputFieldU.addEventListener('focusout', function () {
