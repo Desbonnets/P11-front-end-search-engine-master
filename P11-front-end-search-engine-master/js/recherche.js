@@ -105,12 +105,12 @@ function recherche_Appareilles_recette(input, recipes) {
         arrayTags[i] = tags[i].textContent.toLowerCase();
     }
 
-    if (arrayTags.length > 0) {
+    if (arrayTags.length === 1) {
 
         let array_appliances = [];
         let appliance_id = 0;
         for(let recipe=0; recipe <recipes.length; recipe++){
-            if(arrayTags[Appareille].toLowerCase().includes(recipes[recipe]['appliance'].toLowerCase())){
+            if(arrayTags[0].toLowerCase().includes(recipes[recipe]['appliance'].toLowerCase())){
                 array_appliances[appliance_id] = recipes[recipe];
                 appliance_id++;
             }
