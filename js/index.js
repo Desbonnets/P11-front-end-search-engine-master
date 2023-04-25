@@ -119,9 +119,9 @@ function recherche_recette() {
     let input = document.getElementById('barreRecherche').value;
 
     recettes = getRecherche(input, recipes);
-    let ingredients = recherche_Ingredients_recette(document.getElementById('rechercheIngredients'), recipes);
-    let ustensils = recherche_Ustensils_recette(document.getElementById('rechercheUstensils'), recipes);
-    let appareilles = recherche_Appareilles_recette(document.getElementById('rechercheAppareilles'), recipes);
+    let ingredients = recherche_Ingredients_recette(recipes);
+    let ustensils = recherche_Ustensils_recette(recipes);
+    let appareilles = recherche_Appareilles_recette(recipes);
 
     let result = [];
     let a = 0;

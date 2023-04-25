@@ -52,17 +52,16 @@ function isUstensil(ArrayUstensils, ustensil) {
  * @param { Array } recipes Array de recette
  * @returns { Array } un array des recettes
  */
-function recherche_Ustensils_recette(input, recipes) {
+function recherche_Ustensils_recette(recipes) {
 
-    input = input.value.toLowerCase();
     let result = [];
 
     let arrayTags = [];
     let tags = document.querySelectorAll('#tags [name="itemU"]');
 
-    for(let i =0; i < tags.length; i++){
-        arrayTags[i] = tags[i].textContent.toLowerCase();
-    }
+    tags.forEach((tag)=>{
+        arrayTags.push(tag.textContent.toLowerCase());
+    });
 
     if (arrayTags.length > 0) {
         
@@ -80,17 +79,16 @@ function recherche_Ustensils_recette(input, recipes) {
  * @param { Array } recipes Array de recette
  * @returns { Array } un array des recettes
  */
-function recherche_Appareilles_recette(input, recipes) {
+function recherche_Appareilles_recette(recipes) {
 
-    input = input.value.toLowerCase();
     let result = [];
 
     let arrayTags = [];
     let tags = document.querySelectorAll('#tags [name="itemA"]');
 
-    for(let i =0; i < tags.length; i++){
-        arrayTags[i] = tags[i].textContent.toLowerCase();
-    }
+    tags.forEach((tag)=>{
+        arrayTags.push(tag.textContent.toLowerCase());
+    });
 
     if (arrayTags.length === 1) {
 
@@ -108,16 +106,15 @@ function recherche_Appareilles_recette(input, recipes) {
  * @param { Array } recipes Array de recette
  * @returns { Array } un array des recettes
  */
-function recherche_Ingredients_recette(input,recipes) {
+function recherche_Ingredients_recette(recipes) {
 
-    input = input.value.toLowerCase();
     let tags = document.querySelectorAll('#tags [name="itemI"]');
     let arrayTags = [];
     let result = [];
 
-    for(let i =0; i < tags.length; i++){
-        arrayTags[i] = tags[i].textContent.toLowerCase();
-    }
+    tags.forEach((tag)=>{
+        arrayTags.push(tag.textContent.toLowerCase());
+    });
 
     if (arrayTags.length > 0) {
 
