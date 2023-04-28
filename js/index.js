@@ -116,6 +116,7 @@ let recettes = recipes;
  */
 function recherche_recette() {
 
+    const start1 = performance.now();
     let input = document.getElementById('barreRecherche').value;
 
     recettes = getRecherche(input, recipes);
@@ -145,7 +146,7 @@ function recherche_recette() {
     recettes = result;
     result = [];
     a = 0;
-    ustensils.forEach((ustensil) =>{
+    ustensils.forEach((ustensil) => {
         if (isRecette(ustensil, recettes)) {
             result[a] = ustensil;
             a++;
@@ -167,4 +168,9 @@ function recherche_recette() {
     } else if (input.length >= 3) {
         getRechercheRecette(recettes);
     }
+
+    const end1 = performance.now();
+    const time1 = end1 - start1;
+    //confirm(start1 +'||'+ end1);
+    console.log('Code 1 time:', time1);
 }
