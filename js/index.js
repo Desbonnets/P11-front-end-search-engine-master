@@ -1,3 +1,15 @@
+function myFunction(x) {
+    if (x.matches) { // If media query matches
+      document.getElementById('filtres').setAttribute('class', 'row row-cols-1');
+    } else {
+        document.getElementById('filtres').setAttribute('class', 'row row-cols-3');
+    }
+  }
+  
+  let x = window.matchMedia("(max-width: 768px)");
+  myFunction(x); // Call listener function at run time
+  x.addListener(myFunction); // Attach listener function on state changes
+
 /**
  * 
  * @param { Recette } data 

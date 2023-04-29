@@ -1,11 +1,11 @@
 .itemA:hover{
-    background-color: var(--bs-success-text);
+    background-color: #56cc91;
 }
 .itemI:hover{
-    background-color: var(--bs-primary-text);
+    background-color: #2e76e3;
 }
 .itemU:hover{
-    background-color: var(--bs-danger-text);
+    background-color: #d2584b;
 }
 .itemA{
     min-width: 140px;
@@ -15,4 +15,114 @@
 }
 .itemU{
     min-width: 140px;
+}
+.drop-menu{
+    max-width:450px !important;
+}
+.dropA{
+    background-color: #68D9A4;
+}
+.dropI{
+    background-color: #3282F7;
+}
+.dropU{
+    background-color: #ED6454;
+}
+.tagA{
+    background-color: #68D9A4;
+}
+.tagI{
+    background-color: #3282F7;
+}
+.tagU{
+    background-color: #ED6454;
+}
+.tagA:hover{
+    background-color: #68D9A4;
+}
+.tagI:hover{
+    background-color: #3282F7;
+}
+.tagU:hover{
+    background-color: #ED6454;
+}
+.logo{
+    margin: 20px;
+}
+.barre-recherche{
+    height: 70px !important;
+    background: #E7E7E7;
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    color: #000000;
+}
+.barre-recherche:focus{
+    background: #E7E7E7;
+}
+.barre-recherche::placeholder{
+    opacity: 0.5;
+}
+.barre-recherche-icon{
+    position: relative;
+    z-index: 10;
+    bottom: 50%;
+    left: 94%;
+}
+.filtre{
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 22px;
+    color: #ffffff !important;
+}
+.filtre-ingredients{
+    background: #3282F7;
+}
+.filtre-ingredients:focus{
+    background: #3282F7;
+}
+.filtre-ingredients::placeholder{
+    color: #ffffff !important;
+}
+.filtre-ustenciles{
+    background: #ED6454;
+}
+.filtre-ustenciles:focus{
+    background: #ED6454;
+}
+.filtre-ustenciles::placeholder{
+    color: #ffffff !important;
+}
+.filtre-appareilles{
+    background: #68D9A4;
+}
+.filtre-appareilles:focus{
+    background: #68D9A4;
+}
+.filtre-appareilles::placeholder{
+    color: #ffffff !important;
+}
+@media (max-width: 992px) {
+    .barre-recherche-icon{
+        left: 92%;
+    }
+}
+@media (max-width: 768px) {
+    .barre-recherche-icon{
+        left: 90%;
+    }
+}
+@media (max-width: 480px) {
+    .barre-recherche-icon{
+        left: 85%;
+    }
+}
+@media (max-width: 320px) {
+    .barre-recherche-icon{
+        left: 80%;
+    }
 }
