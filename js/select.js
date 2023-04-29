@@ -127,13 +127,13 @@ function displayTag(element, color) {
     
     if(color == 'itemA'){
         newTag.setAttribute('name',color);
-        color = 'btn-success';
+        color = 'tagA';
     }else if(color == 'itemI'){
         newTag.setAttribute('name',color);
-        color = 'btn-primary';
+        color = 'tagI';
     }else if(color == 'itemU'){
         newTag.setAttribute('name',color);
-        color = 'btn-danger';
+        color = 'tagU';
     }
      
     newTag.setAttribute('type','button'); 
@@ -171,11 +171,11 @@ inputFieldA.addEventListener('focus', function (e) {
     }else{
         changeAutoComplete(e.target, ulFieldA, 'itemA', AppareillesAll());
     }
-    ulFieldA.setAttribute('class', 'dropdown-menu bg-success show');
+    ulFieldA.setAttribute('class', 'dropdown-menu dropA show');
 });
 inputFieldA.addEventListener('focusout', function () {
     if (!estSurvole) {
-        ulFieldA.setAttribute('class', 'dropdown-menu bg-success')
+        ulFieldA.setAttribute('class', 'dropdown-menu dropA')
         ulFieldA.querySelector('.container .row').innerHTML = '';
     }
 });
@@ -196,11 +196,11 @@ inputFieldI.addEventListener('focus', function (e) {
     }else{
         changeAutoComplete(e.target, ulFieldI, 'itemI', IngredientsAll());
     }
-    ulFieldI.setAttribute('class', 'dropdown-menu bg-primary show');
+    ulFieldI.setAttribute('class', 'dropdown-menu dropI show');
 });
 inputFieldI.addEventListener('focusout', function () {
     if (!estSurvole) {
-        ulFieldI.setAttribute('class', 'dropdown-menu bg-primary')
+        ulFieldI.setAttribute('class', 'dropdown-menu dropI')
         ulFieldI.querySelector('.container .row').innerHTML = '';
     }
 });
@@ -221,11 +221,11 @@ inputFieldU.addEventListener('focus', function () {
     }else{
         changeAutoComplete(e.target, ulFieldU, 'itemU', UstensilsAll());
     }
-    ulFieldU.setAttribute('class', 'dropdown-menu bg-danger show');
+    ulFieldU.setAttribute('class', 'dropdown-menu dropU show');
 });
 inputFieldU.addEventListener('focusout', function () {
     if (!estSurvole) {
-        ulFieldU.setAttribute('class', 'dropdown-menu bg-danger')
+        ulFieldU.setAttribute('class', 'dropdown-menu dropU')
         ulFieldU.querySelector('.container .row').innerHTML = '';
     }
 });
