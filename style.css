@@ -44,12 +44,30 @@
     background-color: #ED6454;
 }
 .tagA{
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 17px;
+    margin-top: 10px;
     background-color: #68D9A4;
 }
 .tagI{
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 17px;
+    margin-top: 10px;
     background-color: #3282F7;
 }
 .tagU{
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 17px;
+    margin-top: 10px;
     background-color: #ED6454;
 }
 .tagA:hover{
