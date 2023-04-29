@@ -106,6 +106,70 @@
 .filtre-appareilles::placeholder{
     color: #ffffff !important;
 }
+.svg-container {
+    width: 100%;
+    height: auto;
+    max-width: 380px;
+    background-color: #C7BEBE;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.svg-path {
+    fill: none;
+}
+.card{
+    background: #E7E7E7;
+    border-radius: 5px;
+    max-width: 380px;
+    max-height: 364px;
+}
+.card-titre{
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+}
+.card-time{
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 22px;
+    white-space: nowrap;
+}
+.card-liste{
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 14px;
+    width: 170px;
+    height: 110px;
+}
+.card-description {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 100%;
+    width: 170px;
+    height: 110px;
+    /*padding: 20px;*/
+    /*white-space: nowrap;*/
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.text {
+    max-height: 110px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+}
+
 @media (max-width: 992px) {
     .barre-recherche-icon{
         left: 92%;

@@ -28,7 +28,7 @@ function recetteFactory(data) {
         //creation des elements
         const article = document.createElement('article');
         const divCard = document.createElement('div');
-        let svg = '<svg class="bd-placeholder-img card-img-top" width="100%" height="200" role="img" aria-label="Placeholder: Image"focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text text-anchor="middle" x="50%" y="50%" fill="#fff" dy=".3em">Image d\'une recette</text></svg>';
+        let svg = '<div class="svg-container"><svg viewBox="0 0 380 178" fill="none" xmlns="http://www.w3.org/2000/svg"><path class="svg-path" d="M0 5C0 2.23858 2.23858 0 5 0H375C377.761 0 380 2.23858 380 5V178H0V5Z" fill="#C7BEBE"/></svg></div>';
         const divContenu = document.createElement('div');
         const divHeader = document.createElement('div');
         const titre = document.createElement('div');
@@ -36,19 +36,19 @@ function recetteFactory(data) {
         const divDetail = document.createElement('div');
         const list = document.createElement('ul');
         const descriptions = document.createElement('div');
+        const texteDescriptions = document.createElement('div');
 
         //ajouter les attributs de chaque elements
         article.setAttribute("class", "col");
         divCard.setAttribute("class", "card shadow-sm");
-        divCard.setAttribute("style", "height: 450px;");
         divContenu.setAttribute("class", "card-body");
-        divContenu.setAttribute("style", "height: 250px;");
         divHeader.setAttribute("class", "d-flex justify-content-between align-items-center mb-3");
-        titre.setAttribute("class", "fs-4");
-        temps.setAttribute("class", "fs-4 fw-bold");
+        titre.setAttribute("class", "fs-4 card-titre");
+        temps.setAttribute("class", "fs-4 fw-bold card-time");
         divDetail.setAttribute("class", "row g-2 mb-2 h-75");
-        list.setAttribute("class", "col overflow-hidden ps-3 pe-4 h-100");
-        descriptions.setAttribute("class", "col overflow-hidden card-text h-100");
+        list.setAttribute("class", "col overflow-hidden card-liste");
+        descriptions.setAttribute("class", "col card-text h-100 card-description");
+        texteDescriptions.setAttribute("class", "text");
 
         //Ajout du contenu dans les elements
         titre.textContent = name;
@@ -58,7 +58,7 @@ function recetteFactory(data) {
             let ingredient = document.createElement('strong');
             let ingredientQuantite = document.createElement('li');
 
-            ingredientQuantite.setAttribute("class", "list-group-item text-nowrap");
+            ingredientQuantite.setAttribute("class", "list-group-item text");
 
             ingredient.textContent = data['ingredient'] + " :";
 
@@ -73,7 +73,7 @@ function recetteFactory(data) {
             list.appendChild(ingredientQuantite);
         });
 
-        descriptions.textContent = description;
+        texteDescriptions.textContent = description;
 
 
         //organisation (parents/enfants) des elements
@@ -82,6 +82,7 @@ function recetteFactory(data) {
         divHeader.appendChild(temps);
         divContenu.appendChild(divDetail);
         divDetail.appendChild(list);
+        descriptions.appendChild(texteDescriptions);
         divDetail.appendChild(descriptions);
         divCard.innerHTML = svg;
         divCard.appendChild(divContenu);
